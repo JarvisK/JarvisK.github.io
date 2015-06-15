@@ -1,8 +1,47 @@
 <html>
 	<head>
 		<title>test</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.form.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			var options = {
+				target: '#result',
+				beforeSubmit: showRequest,
+				success: showResponse,
+				url: 'process.php',
+				type: 'post'
+			};
+			$('#form1').submit(function(){
+				$(this).ajaxSubmit(options);
+				return false;
+			});
+
+			function showRequest(formData, jqForm, options)
+			{
+				//送出前處理
+				var queryString = $.param(formData);
+				console.log(queryString);
+				return true;
+			}
+
+			function showResponse(text, status, xhr, $form)
+			{
+				//送出後處理
+				console.log(text);
+				console.log(status);
+			}
+			
+		});
+		</script>
 	</head>
 	<body>
-		dfdf
+		<form id="form1" enctype="multipart/form-data">
+			<input name="imgs[]" type="file" accept="image/*"><br><br>
+			<input name="imgs[]" type="file" accept="image/*"><br><br>
+			<input name="imgs[]" type="file" accept="image/*"><br><br>
+			<input type="submit" value="上傳">
+		</form>
+		<div id="result"></div>
 	</body>
 </html>
