@@ -5,12 +5,27 @@
 		<script type="text/javascript" src="js/jquery.form.js"></script>
 		<script type="text/javascript">
 		$(document).ready(function(){
-			var options = {
+            $('#send-button').click(function() {
+            
+            $.ajax({
+                method: 'get',
+                url: 'https://us-central1-jarvis-test-app-2019.cloudfunctions.net/jarvis-api-test',
+                success: function(data) {
+                    alert('Name = ' + data.user);
+                    alert('Gender = ' + data.gender);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
+            });
+			/*var options = {
 				target: '#result',
 				beforeSubmit: showRequest,
 				success: showResponse,
 				url: 'process.php',
-				type: 'post'
+				type: 'get'
 			};
 			$('#form1').submit(function(){
 				$(this).ajaxSubmit(options);
@@ -19,10 +34,7 @@
 
 			function showRequest(formData, jqForm, options)
 			{
-				//送出前處理
-				var queryString = $.param(formData);
-				console.log(queryString);
-				return true;
+                alert(formData);
 			}
 
 			function showResponse(text, status, xhr, $form)
@@ -30,18 +42,19 @@
 				//送出後處理
 				console.log(text);
 				console.log(status);
-			}
+			}*/
 			
 		});
 		</script>
 	</head>
 	<body>
-		<form id="form1" enctype="multipart/form-data">
+        <button id="send-button">Get Message From Cloud Function</button>
+		<!--<form id="form1" enctype="multipart/form-data">
 			<input name="imgs[]" type="file" accept="image/*"><br><br>
 			<input name="imgs[]" type="file" accept="image/*"><br><br>
 			<input name="imgs[]" type="file" accept="image/*"><br><br>
 			<input type="submit" value="上傳">
 		</form>
-		<div id="result"></div>
+		<div id="result"></div>-->
 	</body>
 </html>
